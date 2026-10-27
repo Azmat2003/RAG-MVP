@@ -1,11 +1,14 @@
 import express from "express";
 import cors from "cors";
-
+import connectDB from "./config/mongo.js";
 import documentRoutes from "./routes/document.routes.js";
 import chatRoutes from "./routes/chat.routes.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
+
+// db connnection
+connectDB();
 
 // Global Middlewares
 app.use(cors());

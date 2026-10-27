@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
+import toast, { Toaster } from "react-hot-toast";
 import Sidebar from "./ components/layout/Sidebar.jsx";
 import ChatBox from "./ components/chat/ChatBox.jsx";
 import DocumentPanel from "./ components/documents/DocumentPanel.jsx";
@@ -83,50 +83,51 @@ function App() {
 
   // Upload PDF to existing backend
   const handleUpload = async (file) => {
-    if (uploadLoading) return;
+  if (uploadLoading) return;
 
-    const temporaryId = crypto.randomUUID();
+  setUploadLoading(true);
+
+  const toastId = toast.loading("Uploading PDF...");
+
+  try {
+    const result = await uploadDocument(file);
 
     const newDocument = {
-      id: temporaryId,
+      id: result.data.documentId,
       fileName: file.name,
-      status: "processing",
+      status: "indexed",
     };
 
     setDocuments((prev) => [...prev, newDocument]);
-    setUploadLoading(true);
 
-    try {
-      const result = await uploadDocument(file);
+    toast.success("PDF uploaded successfully!", {
+      id: toastId,
+    });
+  } catch (error) {
+    toast.error("Failed to upload PDF", {
+      id: toastId,
+    });
 
-      setDocuments((prev) =>
-        prev.map((doc) =>
-          doc.id === temporaryId
-            ? {
-                ...doc,
-                id: result.data.documentId || temporaryId,
-                status: "indexed",
-              }
-            : doc
-        )
-      );
-    } catch (error) {
-      setDocuments((prev) =>
-        prev.map((doc) =>
-          doc.id === temporaryId
-            ? { ...doc, status: "failed" }
-            : doc
-        )
-      );
-
-      throw error;
-    } finally {
-      setUploadLoading(false);
-    }
-  };
+    throw error;
+  } finally {
+    setUploadLoading(false);
+  }
+};
 
   return (
     <div className="flex h-dvh overflow-hidden bg-gradient-to-br from-[#080e23] via-[#171638] to-[#302052] text-slate-100">
+
+  <Toaster
+      position="top-right"
+      toastOptions={{
+        duration: 3000,
+        style: {
+          background: "#1e1b4b",
+          color: "#fff",
+          border: "1px solid #6d28d9",
+        },
+      }}
+    />
 
       {/* Desktop Sidebar */}
       <Sidebar onNewChat={handleNewChat} />

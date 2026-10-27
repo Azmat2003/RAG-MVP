@@ -12,12 +12,10 @@ export const uploadDocument = async (file) => {
   };
 
   const response = await fetch(api, options);
-
   const result = await response.json();
-
+  
   if (!response.ok || result.success === false) {
     throw new Error(result.message || "Failed to upload PDF");
   }
-
   return result;
 };

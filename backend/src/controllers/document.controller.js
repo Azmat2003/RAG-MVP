@@ -1,10 +1,11 @@
 import { randomUUID } from "node:crypto";
-
+import Document from '../models/document.model.js';
 import { processPDF } from "../services/pdf.service.js";
 import { chunkText } from "../services/chunk.service.js";
 import { generateEmbeddings } from "../services/embedding.service.js";
 import { storeVectors } from "../services/vector.service.js";
 import { deleteFile } from "../utils/file.util.js";
+
 
 export const uploadDocument = async (req, res, next) => {
   try {
@@ -40,6 +41,10 @@ export const uploadDocument = async (req, res, next) => {
       chunks,
       embeddings,
     });
+
+    // 5. Saving to MongoDB fileName - documentID - for future use
+    const doc = {fileName : req.file.originalname, documentId};
+    await Document.insertOne(doc);
 
     return res.status(201).json({
       success: true,
