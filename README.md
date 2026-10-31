@@ -2,10 +2,19 @@
 
 An AI-powered PDF chatbot that lets users upload documents and ask questions in natural language. Built using **Retrieval-Augmented Generation (RAG)**, it retrieves relevant information from uploaded PDFs and generates context-aware responses using LLMs.
 
-\<p align="center">
-&#x20; \<a href="[https://rag-mvp-phi.vercel.app/](https://rag-mvp-phi.vercel.app/)">\<strong>🚀 Live Demo\</strong>\</a> ·
-&#x20; \<a href="[https://github.com/Azmat2003/RAG-MVP](https://github.com/Azmat2003/RAG-MVP)">\<strong>📂 GitHub Repository\</strong>\</a>
-\</p>
+<p align="center">
+  <a href="https://rag-mvp-phi.vercel.app/">
+    <strong>🚀 Live Demo</strong>
+  </a>
+  ·
+  <a href="https://github.com/Azmat2003/RAG-MVP">
+    <strong>📂 GitHub Repository</strong>
+  </a>
+  ·
+  <a href="https://app.notion.com/p/RAG-4034aaa4c84780f9a42ee91421587d6b?source=copy_link">
+    <strong>📖 Documentation & Learning Material</strong>
+  </a>
+</p>
 
 ---
 
